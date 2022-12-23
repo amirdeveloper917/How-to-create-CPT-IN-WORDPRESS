@@ -1,0 +1,113 @@
+/*How to create custom post type in wordpress via code*/
+
+/*Follow the steps below to create a custom post type on a WordPress website:
+
+Navigate to the function.php file from your WordPress theme directory
+Add the following code to the function.php file*/
+
+/* Custom Post Type ABCTESTING */
+
+function create_posttype() {
+register_post_type( 'ABCTESTING',
+// CPT Options
+
+array(
+  'labels' => array(
+   'name' => __( 'ABCTESTING' ),
+   'singular_name' => __( 'ABCTESTING' )
+  ),
+  'public' => true,
+  'has_archive' => false,
+  'rewrite' => array('slug' => 'ABCTESTING'),
+ )
+);
+}
+// Hooking up our function to theme setup
+add_action( 'init', 'create_posttype' );
+
+/* Custom Post Type ABCTESTING End */
+
+/* Once you’ve added the code, the News post-type will automatically appear in the admin area. When creating custom post types, it is necessary to use init for the hook in add_action(), and the register_post_type() function will take the arguments */
+
+/*Custom Post type ABCTESTING*/
+function cw_post_type_ABCTESTING() {
+$supports = array(
+'title', // post title
+'editor', // post content
+'author', // post author
+'thumbnail', // featured images
+'excerpt', // post excerpt
+'custom-fields', // custom fields
+'comments', // post comments
+'revisions', // post revisions
+'post-formats', // post formats
+);
+$labels = array(
+'name' => _x('ABCTESTING', 'plural'),
+'singular_name' => _x('ABCTESTING', 'singular'),
+'menu_name' => _x('ABCTESTING', 'admin menu'),
+'name_admin_bar' => _x('ABCTESTING', 'admin bar'),
+'add_new' => _x('Add New', 'add new'),
+'add_new_item' => __('Add New ABCTESTING'),
+'new_item' => __('New ABCTESTING'),
+'edit_item' => __('Edit ABCTESTING'),
+'view_item' => __('View ABCTESTING'),
+'all_items' => __('All ABCTESTING'),
+'search_items' => __('Search ABCTESTING'),
+'not_found' => __('No ABCTESTING found.'),
+);
+$args = array(
+'supports' => $supports,
+'labels' => $labels,
+'public' => true,
+'query_var' => true,
+'rewrite' => array('slug' => 'ABCTESTING'),
+'has_archive' => true,
+'hierarchical' => false,
+);
+register_post_type('ABCTESTING', $args);
+}
+add_action('init', 'cw_post_type_ABCTESTING');
+/*Custom Post type end*/
+$supports: Specifies that the post type is compatible and supports all essential features.
+
+$labels: Specifies that the post type is referred correctly to the admin area.
+
+$args: Specifies a permalink slug of the ABCTESTING and a menu position located just beneath the Posts menu.
+
+
+
+/* Create a Template and Fetching List
+Creating a template and fetching a list requires creating a new file named template-ABCTESTING.php.*/
+
+Place the newly created file in your theme folder.
+Add the following code to the file:
+<?php
+/*Template Name: ABCTESTING*/
+get_header();
+query_posts(array(
+   'post_type' => 'ABCTESTING'
+)); ?>
+<?php
+while (have_posts()) : the_post(); ?>
+<h2><a href="<?php the_permalink() ?>"><?php the_title(); ?></a></h2>
+<p><?php the_excerpt(); ?></p>
+<?php endwhile;
+get_footer();
+?>
+
+
+
+/*Select a Template
+Go to your WordPress dashboard
+Click Pages > Add New
+Create a new page named “ABCTESTING“
+Click Page Attributes on the right side and access the drop-down menu under Template
+Select the new template “ABCTESTING“
+Click the Update button to set your template */
+
+
+
+
+
+
